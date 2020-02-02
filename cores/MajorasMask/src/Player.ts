@@ -1,5 +1,5 @@
 import IMemory from 'modloader64_api/IMemory';
-import * as API from '../API/MM/Imports';
+import * as API from '../API/Imports';
 
 export class Player extends API.InstanceObj implements API.IPlayer {
     //subtract this.instance.Link from these values

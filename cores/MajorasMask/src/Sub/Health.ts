@@ -1,4 +1,4 @@
-import * as API from '../../API/MM/Imports';
+import * as API from '../../API/Imports';
 
 export class Health extends API.BaseObj implements API.IHealth {
   private double_defense_addr = 0x1ef6b2;

@@ -1,4 +1,4 @@
-import * as API from '../../API/MM/Imports';
+import * as API from '../../API/Imports';
 
 export class ItemSlots extends API.BaseObj implements API.IItemSlots {
   private inst = 0x1ef6e0;

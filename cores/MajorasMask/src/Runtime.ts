@@ -1,5 +1,5 @@
 import IMemory from 'modloader64_api/IMemory';
-import * as API from '../API/MM/Imports';
+import * as API from '../API/Imports';
 import * as SUB from './Sub/Imports';
 
 export class Runtime extends API.BaseObj implements API.IRuntime {

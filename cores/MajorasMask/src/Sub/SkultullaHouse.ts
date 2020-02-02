@@ -1,4 +1,4 @@
-import * as API from '../../API/MM/Imports';
+import * as API from '../../API/Imports';
 
 export class SkultullaHouse extends API.BaseObj implements API.ISkultullaHouse {
   private woodfall_addr = 0x1f0530;

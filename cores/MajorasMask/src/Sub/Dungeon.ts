@@ -1,5 +1,5 @@
 import IMemory from 'modloader64_api/IMemory';
-import * as API from '../../API/MM/Imports';
+import * as API from '../../API/Imports';
 
 export class Dungeon extends API.BaseObj implements API.IDungeon {
   private inst: number;

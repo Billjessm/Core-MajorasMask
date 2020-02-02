@@ -1,4 +1,4 @@
-import * as API from '../../API/MM/Imports';
+import * as API from '../../API/Imports';
 
 export class Clock extends API.BaseObj implements API.IClock {
   private cur_day_addr = 0x1ef688;

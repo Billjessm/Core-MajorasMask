@@ -1,4 +1,4 @@
-import * as API from '../../API/MM/Imports';
+import * as API from '../../API/Imports';
 
 export class Magic extends API.BaseObj implements API.IMagic {
   private magic_status = 0x1f3598; //triggers various effects, like use magic, flash magic, restore magic

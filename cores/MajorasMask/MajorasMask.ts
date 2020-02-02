@@ -5,7 +5,7 @@ import {
     ModLoaderEvents,
 } from 'modloader64_api/IModLoaderAPI';
 import { CommandBuffer } from './src/CommandBuffer';
-import * as API from './API/MM/Imports';
+import * as API from './API/Imports';
 import * as CORE from './src/Imports';
 
 export class MajorasMask implements ICore, API.IMMCore {

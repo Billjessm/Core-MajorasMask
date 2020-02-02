@@ -1,4 +1,4 @@
-import * as API from '../../API/MM/Imports';
+import * as API from '../../API/Imports';
 
 export class EquipSlots extends API.BaseObj implements API.IEquipSlots {
   private ss_addr = 0x1ef6dd;

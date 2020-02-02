@@ -1,5 +1,5 @@
 import IMemory from 'modloader64_api/IMemory';
-import * as API from '../../API/MM/Imports';
+import * as API from '../../API/Imports';
 
 export class CycleFlags extends API.BufferObj implements API.IBuffered {
     constructor(emu: IMemory) {
