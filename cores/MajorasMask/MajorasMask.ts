@@ -31,7 +31,7 @@ export class MajorasMask implements ICore, API.IMMCore {
   preinit(): void {}
 
   init(): void {
-      this.payloads.push(__dirname + '/MM/MajorasMask.payload');
+      this.payloads.push(__dirname + '/src/MajorasMask.payload');
   }
 
   postinit(): void {
