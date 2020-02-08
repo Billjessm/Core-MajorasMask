@@ -57,8 +57,8 @@ export interface IHealth {
 }
 
 export interface IMagic {
-  magic_bar: number;
-  magic_amount: number;
+  amount: number;
+  bar: number;
 }
 
 export interface ISkultullaHouse {

@@ -438,8 +438,9 @@ export enum ItemSlotType {
   POWDER_KEG = 0x0c,
   PICTOGRAPH_BOX = 0x0d,
   LENS_OF_TRUTH = 0x0e,
-  HOOKSHOT = 0x11,
-
+  HOOKSHOT = 0x0f,
+  GREAT_FAIRYS_SWORD = 0x10,
+  EVENT_ITEM_3 = 0x11,
   BOTTLE_1 = 0x12,
   BOTTLE_2 = 0x13,
   BOTTLE_3 = 0x14,

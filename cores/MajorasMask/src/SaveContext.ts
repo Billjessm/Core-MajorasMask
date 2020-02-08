@@ -116,10 +116,10 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
   }
 
   get intro_flag(): number {
-      return this.emulator.rdramRead32(this.intro_flag_addr);
+      return this.emulator.rdramRead8(this.intro_flag_addr);
   }
   set intro_flag(value: number) {
-      this.emulator.rdramWrite32(this.intro_flag_addr, value);
+      this.emulator.rdramWrite8(this.intro_flag_addr, value);
   }
 
   get owl_id(): number {
