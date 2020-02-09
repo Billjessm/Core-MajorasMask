@@ -70,7 +70,17 @@ export interface ISkultullaHouse {
 // ##  Primary-Classes
 // ##################################################################
 
-export interface IPlayer { }
+export interface IPlayer {
+  anim: Buffer;
+  position: Buffer;
+  pos_x: number;
+  pos_y: number;
+  pos_z: number;
+  rotation: Buffer;
+  rot_x: number;
+  rot_y: number;
+  rot_z: number;
+}
 
 export interface IRuntime {
   get_current_scene(): number;
