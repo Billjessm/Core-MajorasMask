@@ -50,9 +50,9 @@ export interface IMaskSlots {
 }
 
 export interface IHealth {
+  containers: number;
   double_defense: number;
   pieces: number;
-  heart_container: number;
   start_health: number;
 }
 
@@ -70,7 +70,7 @@ export interface ISkultullaHouse {
 // ##  Primary-Classes
 // ##################################################################
 
-export interface IPlayer {}
+export interface IPlayer { }
 
 export interface IRuntime {
   get_current_scene(): number;
@@ -102,13 +102,15 @@ export interface ISaveContext {
   current_form: number;
   cutscene_number: number;
   entrance_index: number;
-  start_mask: number;
+  have_tatl: boolean;
   intro_flag: number;
+  map_visible: number;
+  map_visited: number;
   owl_id: number;
-  have_tatl: number;
   player_name: number;
-  rupee_amount: number;
   quest_status: number;
+  rupee_amount: number;
+  start_mask: number;
 
   get_checksum(): number;
 }

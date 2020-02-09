@@ -423,6 +423,7 @@ export enum ItemReceiveType {
 }
 
 export enum ItemSlotType {
+  NONE = 0xff,
   OCARINA_OF_TIME = 0x00,
   HEROS_BOW = 0x01,
   FIRE_ARROW = 0x02,

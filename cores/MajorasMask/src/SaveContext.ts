@@ -3,163 +3,183 @@ import * as API from '../API/Imports';
 import * as SUB from './Sub/Imports';
 
 export class SaveContext extends API.BaseObj implements API.ISaveContext {
-  private instance = 0x1ef670;
+    private instance: number = 0x1ef670;
 
-  private bank_addr = 0x1f054e;
-  private entrance_index_addr: number = this.instance + 0x0000; //
-  private start_mask_addr = 0x1ef674; //Stores the Mask ID Link is wearing (byte)
-  private intro_flag_addr = 0x1ef675; //Intro Cutscene Flag, set to 1 after leaving clock tower. If 0 on load, starts intro sequence.
-  private cutscene_number_addr = 0x1ef678; //Cutscene Number, Used to trigger cutscenes. FFF0 - FFFF trigger cutscenes 0-F. (int16)
-  private owl_id_addr = 0x1ef67e; //Which owl to load from
-  private cur_form_addr = 0x1ef690; //4 = Link, 3 = Deku, 2 = Zora, 1 = Goron, 0 = Fierce Deity (byte)
-  private have_tatl_addr = 0x1ef692; //Tatl flag
-  private player_name_addr = 0x1ef69c; //Player name
-  private rupee_amount_addr = 0x1ef6aa; //Rupees (uint16_t)
+    private bank_addr: number = 0x1f054e;
+    private cur_form_addr: number = 0x1ef690;
+    private cutscene_number_addr: number = 0x1ef678; //Cutscene Number, Used to trigger cutscenes. FFF0 - FFFF trigger cutscenes 0-F.
+    private entrance_index_addr: number = this.instance;
+    private have_tatl_addr: number = 0x1ef692; //Tatl flag
+    private intro_flag_addr: number = 0x1ef675; //Intro Cutscene Flag, set to 1 after leaving clock tower. If 0 on load, starts intro sequence.
+    private map_visible_addr: number = 0x1f05d0; //Visible Map terrain
+    private map_visited_addr: number = 0x1f05cc; //Selectable Map dots
+    private owl_id_addr: number = 0x1ef67e; //Which owl to load from
+    private player_name_addr: number = 0x1ef69c; //Player name
+    private quest_status_addr: number = 0x1ef72c;
+    private rupee_amount_addr: number = 0x1ef6aa; //Rupees (uint16_t)
+    private start_mask_addr: number = 0x1ef674; //Stores the Mask ID Link is wearing (byte)
 
-  private human_c_button_item = 0x1ef6bc;
-  private c_left_item = 0x1ef6bd;
-  private c_down_item = 0x1ef6be;
-  private c_right_item = 0x1ef6bf;
-  private equipped_item_slots = 0x1ef6cc;
-  private inventory_quantities = 0x1ef728;
-  private double_hearts = 0x1ef743; //set to 20 by the game
+    private human_c_button_item = 0x1ef6bc;
+    private c_left_item = 0x1ef6bd;
+    private c_down_item = 0x1ef6be;
+    private c_right_item = 0x1ef6bf;
+    private equipped_item_slots = 0x1ef6cc;
+    private inventory_quantities = 0x1ef728;
+    private double_hearts = 0x1ef743; //set to 20 by the game
 
-  private pictograph_special = 0x1f04ea; //01 = tingle, 04 = deku king, 0A = pirate
-  private map_visited = 0x1f05cc; //Selectable Map dots
-  private map_visible = 0x1f05d0; //Visible Map terrain
-  private has_scarecrow_song = 0x1f05d4; //Scarecrow song flag
-  private scarecrow_song = 0x1f05d6; //Scarecrow's Song
-  private bomber_code = 0x1f066b; //Bomber's code
-  private stored_epona_scene_id = 0x1f0670;
+    private pictograph_special = 0x1f04ea; //01 = tingle, 04 = deku king, 0A = pirate
+    private has_scarecrow_song = 0x1f05d4; //Scarecrow song flag
+    private scarecrow_song = 0x1f05d6; //Scarecrow's Song
+    private bomber_code = 0x1f066b; //Bomber's code
+    private stored_epona_scene_id = 0x1f0670;
 
-  private quest_status_addr = 0x1ef72c;
 
-  private checksum_addr = 0x1f067a;
+    private checksum_addr = 0x1f067a;
 
-  // Abstraction
-  cycle_flags: API.IBuffered;
-  event_flags: API.IBuffered;
-  game_flags: API.IBuffered;
-  owl_flags: API.IBuffered;
+    // Abstraction
+    cycle_flags: API.IBuffered;
+    event_flags: API.IBuffered;
+    game_flags: API.IBuffered;
+    owl_flags: API.IBuffered;
 
-  equip_slots: API.IEquipSlots;
-  item_slots: API.IItemSlots;
-  mask_slots: API.IMaskSlots;
+    equip_slots: API.IEquipSlots;
+    item_slots: API.IItemSlots;
+    mask_slots: API.IMaskSlots;
 
-  clock: API.IClock;
+    clock: API.IClock;
 
-  dungeon_fairies: API.IDungeon;
-  dungeon_items: API.IDungeon;
-  dungeon_keys: API.IDungeon;
+    dungeon_fairies: API.IDungeon;
+    dungeon_items: API.IDungeon;
+    dungeon_keys: API.IDungeon;
 
-  health: API.IHealth;
-  magic: API.IMagic;
+    health: API.IHealth;
+    magic: API.IMagic;
 
-  skultulla_house: API.ISkultullaHouse;
+    skultulla_house: API.ISkultullaHouse;
 
-  constructor(emu: IMemory) {
-      super(emu);
+    constructor(emu: IMemory) {
+        super(emu);
 
-      this.cycle_flags = new SUB.CycleFlags(emu);
-      this.event_flags = new SUB.EventFlags(emu);
-      this.game_flags = new SUB.GameFlags(emu);
-      this.owl_flags = new SUB.OwlFlags(emu);
+        this.cycle_flags = new SUB.CycleFlags(emu);
+        this.event_flags = new SUB.EventFlags(emu);
+        this.game_flags = new SUB.GameFlags(emu);
+        this.owl_flags = new SUB.OwlFlags(emu);
 
-      this.equip_slots = new SUB.EquipSlots(emu);
-      this.item_slots = new SUB.ItemSlots(emu);
-      this.mask_slots = new SUB.MaskSlots(emu);
+        this.equip_slots = new SUB.EquipSlots(emu);
+        this.item_slots = new SUB.ItemSlots(emu);
+        this.mask_slots = new SUB.MaskSlots(emu);
 
-      this.clock = new SUB.Clock(emu);
-      this.dungeon_fairies = new SUB.Dungeon(emu, 0x1ef744);
-      this.dungeon_items = new SUB.Dungeon(emu, 0x1ef73a);
-      this.dungeon_keys = new SUB.Dungeon(emu, 0x1ef730);
-      this.health = new SUB.Health(emu);
-      this.magic = new SUB.Magic(emu);
-      this.skultulla_house = new SUB.SkultullaHouse(emu);
-  }
+        this.clock = new SUB.Clock(emu);
+        this.dungeon_fairies = new SUB.Dungeon(emu, 0x1ef744);
+        this.dungeon_items = new SUB.Dungeon(emu, 0x1ef73a);
+        this.dungeon_keys = new SUB.Dungeon(emu, 0x1ef730);
+        this.health = new SUB.Health(emu);
+        this.magic = new SUB.Magic(emu);
+        this.skultulla_house = new SUB.SkultullaHouse(emu);
+    }
 
-  //Haven't looked and confirmed length of rdramRead for all
+    //Haven't looked and confirmed length of rdramRead for all
 
-  get bank(): number {
-      return this.emulator.rdramRead16(this.bank_addr);
-  }
-  set bank(val: number) {
-      this.emulator.rdramWrite16(this.bank_addr, val);
-  }
+    get bank(): number {
+        return this.emulator.rdramRead16(this.bank_addr);
+    }
+    set bank(val: number) {
+        this.emulator.rdramWrite16(this.bank_addr, val);
+    }
 
-  get current_form(): number {
-      return this.emulator.rdramRead32(this.cur_form_addr);
-  }
-  set current_form(value: number) {
-      this.emulator.rdramWrite32(this.cur_form_addr, value);
-  }
+    get current_form(): number {
+        return this.emulator.rdramRead8(this.cur_form_addr);
+    }
+    set current_form(val: number) {
+        this.emulator.rdramWrite8(this.cur_form_addr, val);
+    }
 
-  get cutscene_number(): number {
-      return this.emulator.rdramRead16(this.cutscene_number);
-  }
-  set cutscene_number(value: number) {
-      this.emulator.rdramWrite16(this.cutscene_number_addr, value);
-  }
+    get cutscene_number(): number {
+        return this.emulator.rdramRead32(this.cutscene_number);
+    }
+    set cutscene_number(val: number) {
+        this.emulator.rdramWrite32(this.cutscene_number_addr, val);
+    }
 
-  get entrance_index(): number {
-      return this.emulator.rdramRead32(this.entrance_index_addr);
-  }
-  set entrance_index(value: number) {
-      this.emulator.rdramWrite32(this.entrance_index_addr, value);
-  }
+    get entrance_index(): number {
+        return this.emulator.rdramRead32(this.entrance_index_addr);
+    }
+    set entrance_index(val: number) {
+        this.emulator.rdramWrite32(this.entrance_index_addr, val);
+    }
 
-  get start_mask(): number {
-      return this.emulator.rdramRead32(this.start_mask_addr);
-  }
-  set start_mask(value: number) {
-      this.emulator.rdramWrite32(this.start_mask_addr, value);
-  }
+    get have_tatl(): boolean {
+        return this.emulator.rdramRead8(this.have_tatl_addr) !== 0;
+    }
+    set have_tatl(val: boolean) {
+        this.emulator.rdramWrite8(this.have_tatl_addr, val ? 1 : 0);
+    }
 
-  get intro_flag(): number {
-      return this.emulator.rdramRead8(this.intro_flag_addr);
-  }
-  set intro_flag(value: number) {
-      this.emulator.rdramWrite8(this.intro_flag_addr, value);
-  }
+    get map_visible(): number {
+        return this.emulator.rdramRead32(this.map_visible_addr);
+    }
+    set map_visible(val: number) {
+        this.emulator.rdramWrite32(this.map_visible_addr, val);
+    }
 
-  get owl_id(): number {
-      return this.emulator.rdramRead32(this.owl_id_addr);
-  }
-  set owl_id(value: number) {
-      this.emulator.rdramWrite32(this.owl_id_addr, value);
-  }
+    get map_visited(): number {
+        return this.emulator.rdramRead32(this.map_visited_addr);
+    }
+    set map_visited(val: number) {
+        this.emulator.rdramWrite32(this.map_visited_addr, val);
+    }
 
-  get have_tatl(): number {
-      return this.emulator.rdramRead32(this.have_tatl_addr);
-  }
-  set have_tatl(value: number) {
-      this.emulator.rdramWrite32(this.have_tatl_addr, value);
-  }
+    get intro_flag(): number {
+        return this.emulator.rdramRead8(this.intro_flag_addr);
+    }
+    set intro_flag(val: number) {
+        this.emulator.rdramWrite8(this.intro_flag_addr, val);
+    }
 
-  get player_name(): number {
-      return this.emulator.rdramRead32(this.player_name_addr);
-  }
-  set player_name(value: number) {
-      this.emulator.rdramWrite32(this.player_name_addr, value);
-  }
+    get owl_id(): number {
+        return this.emulator.rdramRead16(this.owl_id_addr);
+    }
+    set owl_id(val: number) {
+        this.emulator.rdramWrite16(this.owl_id_addr, val);
+    }
 
-  get rupee_amount(): number {
-      return this.emulator.rdramRead32(this.rupee_amount_addr);
-  }
-  set rupee_amount(value: number) {
-      this.emulator.rdramWrite32(this.rupee_amount_addr, value);
-  }
+    get player_name(): number {
+        let half1 = this.emulator.rdramRead32(this.player_name_addr + 0x04);
+        let half2 = this.emulator.rdramRead32(this.player_name_addr);
+        return (half1 << 0x32) & half2;
+    }
+    set player_name(val: number) {
+        let half1 = val >> 0x32;
+        let half2 = val & 0x00000000ffffffff;
+        this.emulator.rdramWrite32(this.player_name_addr, half2);
+        this.emulator.rdramWrite32(this.player_name_addr + 0x04, half1);
+    }
 
-  get quest_status(): number {
-      let value = this.emulator.rdramRead32(this.quest_status_addr);
-      return value & 0x0fffffff;
-  }
-  set quest_status(val: number) {
-      val &= 0x0fffffff;
-      this.emulator.rdramWrite32(this.quest_status_addr, val);
-  }
+    get quest_status(): number {
+        let value = this.emulator.rdramRead32(this.quest_status_addr);
+        return value & 0x0fffffff;
+    }
+    set quest_status(val: number) {
+        let value = this.emulator.rdramRead32(this.quest_status_addr);
+        value = (value & 0xf0000000) | (val & 0x0fffffff);
+        this.emulator.rdramWrite32(this.quest_status_addr, val);
+    }
 
-  get_checksum(): number {
-      return this.emulator.rdramRead16(this.checksum_addr);
-  }
+    get rupee_amount(): number {
+        return this.emulator.rdramRead16(this.rupee_amount_addr);
+    }
+    set rupee_amount(val: number) {
+        this.emulator.rdramWrite16(this.rupee_amount_addr, val);
+    }
+
+    get start_mask(): number {
+        return this.emulator.rdramRead8(this.start_mask_addr);
+    }
+    set start_mask(val: number) {
+        this.emulator.rdramWrite8(this.start_mask_addr, val);
+    }
+
+    get_checksum(): number {
+        return this.emulator.rdramRead16(this.checksum_addr);
+    }
 }
