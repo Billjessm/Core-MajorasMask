@@ -86,6 +86,9 @@ export interface IRuntime {
   get_current_scene(): number;
   goto_scene(scene: number): void;
 
+  is_entering_zone(): boolean;
+  is_paused(): boolean;
+
   cutscene_ptr: number;
   scene_flags: IBuffered;
 }
