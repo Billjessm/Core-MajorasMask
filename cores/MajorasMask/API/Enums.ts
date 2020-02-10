@@ -531,17 +531,6 @@ export enum MaskSlotType {
   FIERCE_DEITY = 0x17,
 }
 
-export enum MMEvents {
-  ON_SAVE_LOADED = 'onSaveLoaded',
-  ON_SCENE_CHANGE = 'onSceneChange',
-  ON_LOADING_ZONE = 'onLoadingZone',
-  ON_ACTOR_SPAWN = 'onActorSpawn',
-  ON_ACTOR_DESPAWN = 'onActorDespawn',
-  ON_ROOM_CHANGE = 'onRoomChange',
-  ON_ROOM_CHANGE_PRE = 'onPreRoomChange',
-  ON_AGE_CHANGE = 'onAgeChange',
-}
-
 export enum MmOnlineEvents {
   PLAYER_PUPPET_PRESPAWN = 'OotOnline:onPlayerPuppetPreSpawned',
   PLAYER_PUPPET_SPAWNED = 'OotOnline:onPlayerPuppetSpawned',
