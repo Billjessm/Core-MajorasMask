@@ -13,8 +13,8 @@ export class Player extends API.InstanceObj implements API.IPlayer {
     private pos_z_addr = 0x3ffec0;
 
     private rot_x_addr = 0x3ffe6c;
-    private rot_y_addr = 0x3ffe70;
-    private rot_z_addr = 0x3ffe74;
+    private rot_y_addr = 0x3ffe6E;
+    private rot_z_addr = 0x3ffe70;
 
     private current_mask = 0x3fff03; //Current equipped mask
     private current_anim = 0x3ffff8; //Current animation ID
@@ -63,37 +63,37 @@ export class Player extends API.InstanceObj implements API.IPlayer {
 
 
     get rotation(): Buffer {
-        let buf: Buffer = Buffer.alloc(12);
-        buf.writeInt32BE(this.emulator.rdramRead32(this.rot_x_addr), 0);
-        buf.writeInt32BE(this.emulator.rdramRead32(this.rot_y_addr), 4);
-        buf.writeInt32BE(this.emulator.rdramRead32(this.rot_z_addr), 8);
+        let buf: Buffer = Buffer.alloc(6);
+        buf.writeInt16BE(this.emulator.rdramReadS16(this.rot_x_addr), 0);
+        buf.writeInt16BE(this.emulator.rdramReadS16(this.rot_y_addr), 2);
+        buf.writeInt16BE(this.emulator.rdramReadS16(this.rot_z_addr), 4);
         return buf;
     }
     set rotation(val: Buffer) {
-        this.emulator.rdramWriteBuffer(this.rot_x_addr, val.slice(0, 4));
-        this.emulator.rdramWriteBuffer(this.rot_y_addr, val.slice(4, 8));
-        this.emulator.rdramWriteBuffer(this.rot_z_addr, val.slice(8, 12));
+        this.emulator.rdramWriteBuffer(this.rot_x_addr, val.slice(0, 2));
+        this.emulator.rdramWriteBuffer(this.rot_y_addr, val.slice(2, 4));
+        this.emulator.rdramWriteBuffer(this.rot_z_addr, val.slice(4, 6));
     }
 
     get rot_x(): number {
-        return this.emulator.rdramRead32(this.rot_x_addr);
+        return this.emulator.rdramReadS16(this.rot_x_addr);
     }
     set rot_x(val: number) {
-        this.emulator.rdramWrite32(this.rot_x_addr, val);
+        this.emulator.rdramWrite16(this.rot_x_addr, val);
     }
 
     get rot_y(): number {
-        return this.emulator.rdramRead32(this.rot_y_addr);
+        return this.emulator.rdramReadS16(this.rot_y_addr);
     }
     set rot_y(val: number) {
-        this.emulator.rdramWrite32(this.rot_y_addr, val);
+        this.emulator.rdramWrite16(this.rot_y_addr, val);
     }
 
     get rot_z(): number {
-        return this.emulator.rdramRead32(this.rot_z_addr);
+        return this.emulator.rdramReadS16(this.rot_z_addr);
     }
     set rot_z(val: number) {
-        this.emulator.rdramWrite32(this.rot_z_addr, val);
+        this.emulator.rdramWrite16(this.rot_z_addr, val);
     }
 
     get anim(): Buffer {
