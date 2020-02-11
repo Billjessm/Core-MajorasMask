@@ -21,6 +21,8 @@ export class Runtime extends API.BaseObj implements API.IRuntime {
     private continue_state_addr = 0x98; //Not found yet
     private epona_ptr = 0x3ffed0;
 
+    private scene_frame_addr = 0x3FF360;
+
     // Abstraction
     scene_flags: API.IBuffered;
 
@@ -39,6 +41,14 @@ export class Runtime extends API.BaseObj implements API.IRuntime {
 
     set cutscene_ptr(val: number) {
         this.emulator.rdramWrite32(this.cutscene_ptr_addr, val);
+    }
+
+    get scene_frame(): number {
+        return this.emulator.rdramRead32(this.scene_frame_addr);
+    }
+
+    set scene_frame(val: number) {
+        this.emulator.rdramWrite32(this.scene_frame_addr, val);
     }
 
     is_entering_zone(): boolean {

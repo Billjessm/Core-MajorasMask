@@ -91,6 +91,7 @@ export interface IRuntime {
 
   cutscene_ptr: number;
   scene_flags: IBuffered;
+  scene_frame: number;
 }
 
 export interface ISaveContext {
