@@ -20,6 +20,8 @@ export class Runtime extends API.BaseObj implements API.IRuntime {
     private collectable_flag_addr = 0xb5d6c;
     private continue_state_addr = 0x98; //Not found yet
     private epona_ptr = 0x3ffed0;
+    
+    private loaded_object_list_addr = 0x3FE8B4;
 
     private scene_frame_addr = 0x3FF360;
 
@@ -49,6 +51,10 @@ export class Runtime extends API.BaseObj implements API.IRuntime {
 
     set scene_frame(val: number) {
         this.emulator.rdramWrite32(this.scene_frame_addr, val);
+    }
+
+    get loaded_object_list(): number {
+        return this.emulator.rdramRead32(this.loaded_object_list_addr);
     }
 
     is_entering_zone(): boolean {

@@ -1,5 +1,7 @@
 import IMemory from 'modloader64_api/IMemory';
+import IRomMemory from 'modloader64_api/IRomMemory';
 import * as API from '../API/Imports';
+import { IModLoaderAPI, IPlugin } from 'modloader64_api/IModLoaderAPI';
 
 export class Player extends API.InstanceObj implements API.IPlayer {
     //subtract this.instance.Link from these values
@@ -25,9 +27,17 @@ export class Player extends API.InstanceObj implements API.IPlayer {
     private last_coord_ground = 0x400170;
     private give_magic_bar = 0x3830dc;
 
-
+    private link_object_addr = 0x3FE8FC;
+    
+    private ModLoader = {} as IModLoaderAPI;
+    
+    private bruh ={} as unknown as IRomMemory.IRomMemory
 
     get position(): Buffer {
+        
+        
+        this.ModLoader.emulator
+
         let buf: Buffer = Buffer.alloc(12);
         buf.writeFloatBE(this.emulator.rdramReadF32(this.pos_x_addr), 0);
         buf.writeFloatBE(this.emulator.rdramReadF32(this.pos_y_addr), 4);
@@ -61,6 +71,11 @@ export class Player extends API.InstanceObj implements API.IPlayer {
         this.emulator.rdramWriteF32(this.pos_z_addr, val);
     }
 
+    get link_object(): number {
+        return this.emulator.rdramRead32(this.link_object_addr);
+    }
+
+    
 
     get rotation(): Buffer {
         let buf: Buffer = Buffer.alloc(6);
@@ -68,7 +83,9 @@ export class Player extends API.InstanceObj implements API.IPlayer {
         buf.writeInt16BE(this.emulator.rdramReadS16(this.rot_y_addr), 2);
         buf.writeInt16BE(this.emulator.rdramReadS16(this.rot_z_addr), 4);
         return buf;
+        
     }
+    
     set rotation(val: Buffer) {
         this.emulator.rdramWriteBuffer(this.rot_x_addr, val.slice(0, 2));
         this.emulator.rdramWriteBuffer(this.rot_y_addr, val.slice(2, 4));
