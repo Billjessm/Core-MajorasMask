@@ -80,8 +80,6 @@ export interface IPlayer {
   rot_x: number;
   rot_y: number;
   rot_z: number;
-  
-  link_object: number;
 }
 
 export interface IRuntime {
@@ -94,7 +92,6 @@ export interface IRuntime {
   cutscene_ptr: number;
   scene_flags: IBuffered;
   scene_frame: number;
-
 }
 
 export interface ISaveContext {
