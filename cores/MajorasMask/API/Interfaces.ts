@@ -80,6 +80,7 @@ export interface IPlayer {
   rot_x: number;
   rot_y: number;
   rot_z: number;
+  tunic_color: number;
 }
 
 export interface IRuntime {

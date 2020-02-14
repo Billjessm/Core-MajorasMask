@@ -1,5 +1,4 @@
 import IMemory from 'modloader64_api/IMemory';
-import IRomMemory from 'modloader64_api/IRomMemory';
 import * as API from '../API/Imports';
 
 export class Player extends API.InstanceObj implements API.IPlayer {
@@ -9,6 +8,8 @@ export class Player extends API.InstanceObj implements API.IPlayer {
 
     private position_addr = 0x3ffeb8;
     private rotation_addr = 0x3ffe6c;
+
+    private col_tunic: number = 0x117d08ff;
 
     // private current_mask = 0x3fff03; //Current equipped mask
     // private current_anim = 0x3ffff8; //Current animation ID
@@ -80,5 +81,12 @@ export class Player extends API.InstanceObj implements API.IPlayer {
     }
     set rot_z(val: number) {
         this.emulator.rdramWrite16(this.rotation_addr+ 0x04, val);
+    }
+
+    get tunic_color() : number {
+        return this.col_tunic;
+    }
+    set tunic_color(val: number) {
+        this.col_tunic = val;
     }
 }
