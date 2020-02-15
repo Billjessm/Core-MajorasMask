@@ -37,28 +37,34 @@ export interface IEquipSlots {
   quiver: apiBit.QuiverBmp;
 }
 
+export interface IHealth {
+  containers: number;
+  double_defense: number;
+  hearts: number;
+  pieces: number;
+}
+
 export interface IItemSlots {
   array: Buffer;
   get_slot(slot: apiEnum.ItemSlotType): apiEnum.ItemType;
   set_slot(slot: apiEnum.ItemSlotType, item: apiEnum.ItemType): void;
 }
 
+export interface IMagic {
+  amount: number;
+  bar: number;
+}
+
+export interface IMap {
+  mini: Buffer;
+  visited: number;
+  visible: number;
+}
+
 export interface IMaskSlots {
   array: Buffer;
   get_slot(slot: apiEnum.MaskSlotType): apiEnum.MaskType;
   set_slot(slot: apiEnum.MaskSlotType, mask: apiEnum.MaskType): void;
-}
-
-export interface IHealth {
-  containers: number;
-  double_defense: number;
-  pieces: number;
-  start_health: number;
-}
-
-export interface IMagic {
-  amount: number;
-  bar: number;
 }
 
 export interface ISkultullaHouse {
@@ -72,6 +78,7 @@ export interface ISkultullaHouse {
 
 export interface IPlayer {
   anim: Buffer;
+  current_form: number;
   position: Buffer;
   pos_x: number;
   pos_y: number;
@@ -90,7 +97,9 @@ export interface IRuntime {
   is_entering_zone(): boolean;
   is_paused(): boolean;
 
+  cutscene_number: number;
   cutscene_ptr: number;
+  entrance_index: number;
   scene_flags: IBuffered;
   scene_frame: number;
 }
@@ -111,16 +120,12 @@ export interface ISaveContext {
   dungeon_keys: IDungeon;
   health: IHealth;
   magic: IMagic;
+  map: IMap;
   skultulla_house: ISkultullaHouse;
 
   bank: number;
-  current_form: number;
-  cutscene_number: number;
-  entrance_index: number;
   have_tatl: boolean;
   intro_flag: number;
-  map_visible: number;
-  map_visited: number;
   owl_id: number;
   player_name: number;
   quest_status: number;

@@ -12,4 +12,5 @@ export * from './Clock';
 export * from './Dungeon';
 export * from './Health';
 export * from './Magic';
+export * from './Map';
 export * from './SkultullaHouse';

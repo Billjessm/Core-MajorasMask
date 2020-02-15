@@ -6,6 +6,7 @@ export class Magic extends API.BaseObj implements API.IMagic {
     private double_meter_addr = 0x1ef6b0; //Double Magic Flag
     private has_meter1_addr = 0x1ef6b0;
     private has_meter2_addr = 0x1ef6b1;
+    //private has_bubble_addr = 0x;
     private magic_addr = 0x1f35a0; //unknown use?
     private max_addr = 0x1f359e; //0x30 = normal, 0x60 = double
     private status_addr = 0x1f3598; //triggers various effects, like use magic, flash magic, restore magic

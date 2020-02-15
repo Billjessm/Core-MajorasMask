@@ -3,20 +3,13 @@ import * as API from '../API/Imports';
 import * as SUB from './Sub/Imports';
 
 export class SaveContext extends API.BaseObj implements API.ISaveContext {
-    private instance: number = 0x1ef670;
-
     private bank_addr: number = 0x1f054e;
-    private cur_form_addr: number = 0x1ef690;
-    private cutscene_number_addr: number = 0x1ef678; //Cutscene Number, Used to trigger cutscenes. FFF0 - FFFF trigger cutscenes 0-F.
-    private entrance_index_addr: number = this.instance;
-    private have_tatl_addr: number = 0x1ef692; //Tatl flag
-    private intro_flag_addr: number = 0x1ef675; //Intro Cutscene Flag, set to 1 after leaving clock tower. If 0 on load, starts intro sequence.
-    private map_visible_addr: number = 0x1f05d0; //Visible Map terrain
-    private map_visited_addr: number = 0x1f05cc; //Selectable Map dots
-    private owl_id_addr: number = 0x1ef67e; //Which owl to load from
+    private have_tatl_addr: number = 0x1ef692;
+    private intro_flag_addr: number = 0x1ef675;
+    private owl_id_addr: number = 0x1ef67e;
     private player_name_addr: number = 0x1ef69c; //Player name
     private quest_status_addr: number = 0x1ef72c;
-    private rupee_amount_addr: number = 0x1ef6aa; //Rupees (uint16_t)
+    private rupee_amount_addr: number = 0x1ef6aa;
     private start_mask_addr: number = 0x1ef674; //Stores the Mask ID Link is wearing (byte)
 
     private human_c_button_item = 0x1ef6bc;
@@ -32,7 +25,6 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
     private scarecrow_song = 0x1f05d6; //Scarecrow's Song
     private bomber_code = 0x1f066b; //Bomber's code
     private stored_epona_scene_id = 0x1f0670;
-
 
     private checksum_addr = 0x1f067a;
 
@@ -51,10 +43,9 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
     dungeon_fairies: API.IDungeon;
     dungeon_items: API.IDungeon;
     dungeon_keys: API.IDungeon;
-
     health: API.IHealth;
-    magic: API.IMagic;
-
+    magic: API.IMagic;    
+    map: API.IMap;
     skultulla_house: API.ISkultullaHouse;
 
     constructor(emu: IMemory) {
@@ -75,6 +66,7 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
         this.dungeon_keys = new SUB.Dungeon(emu, 0x1ef730);
         this.health = new SUB.Health(emu);
         this.magic = new SUB.Magic(emu);
+        this.map = new SUB.Map(emu);
         this.skultulla_house = new SUB.SkultullaHouse(emu);
     }
 
@@ -87,46 +79,11 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
         this.emulator.rdramWrite16(this.bank_addr, val);
     }
 
-    get current_form(): number {
-        return this.emulator.rdramRead8(this.cur_form_addr);
-    }
-    set current_form(val: number) {
-        this.emulator.rdramWrite8(this.cur_form_addr, val);
-    }
-
-    get cutscene_number(): number {
-        return this.emulator.rdramRead32(this.cutscene_number);
-    }
-    set cutscene_number(val: number) {
-        this.emulator.rdramWrite32(this.cutscene_number_addr, val);
-    }
-
-    get entrance_index(): number {
-        return this.emulator.rdramRead32(this.entrance_index_addr);
-    }
-    set entrance_index(val: number) {
-        this.emulator.rdramWrite32(this.entrance_index_addr, val);
-    }
-
     get have_tatl(): boolean {
         return this.emulator.rdramRead8(this.have_tatl_addr) !== 0;
     }
     set have_tatl(val: boolean) {
         this.emulator.rdramWrite8(this.have_tatl_addr, val ? 1 : 0);
-    }
-
-    get map_visible(): number {
-        return this.emulator.rdramRead32(this.map_visible_addr);
-    }
-    set map_visible(val: number) {
-        this.emulator.rdramWrite32(this.map_visible_addr, val);
-    }
-
-    get map_visited(): number {
-        return this.emulator.rdramRead32(this.map_visited_addr);
-    }
-    set map_visited(val: number) {
-        this.emulator.rdramWrite32(this.map_visited_addr, val);
     }
 
     get intro_flag(): number {

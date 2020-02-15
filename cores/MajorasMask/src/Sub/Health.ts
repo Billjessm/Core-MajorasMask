@@ -3,8 +3,8 @@ import * as API from '../../API/Imports';
 export class Health extends API.BaseObj implements API.IHealth {
     private containers_addr = 0x1ef6a4; //0x10 is equivalent to 1 heart container (int16)
     private double_defense_addr = 0x1ef6b2;
+    private hearts_addr = 0x1ef6a6; //0x10 is equivalent to 1 full heart (int16)
     private pieces_addr = 0x1ef72c;
-    private start_health_addr = 0x1ef6a6; //0x10 is equivalent to 1 full heart (int16)
 
     get containers(): number {
         return this.emulator.rdramRead16(this.containers_addr);
@@ -20,6 +20,13 @@ export class Health extends API.BaseObj implements API.IHealth {
         this.emulator.rdramWrite16(this.double_defense_addr, val);
     }
 
+    get hearts(): number {
+        return this.emulator.rdramRead16(this.hearts_addr);
+    }
+    set hearts(value: number) {
+        this.emulator.rdramWrite16(this.hearts_addr, value);
+    }
+
     get pieces(): number {
         let value = this.emulator.rdramRead8(this.pieces_addr);
         return value >> 0x04;
@@ -28,12 +35,5 @@ export class Health extends API.BaseObj implements API.IHealth {
         let value = this.emulator.rdramRead8(this.pieces_addr);
         value = (value & 0x0f) | (val << 0x04);
         this.emulator.rdramWrite8(this.pieces_addr, value);
-    }
-
-    get start_health(): number {
-        return this.emulator.rdramRead16(this.start_health_addr);
-    }
-    set start_health(value: number) {
-        this.emulator.rdramWrite16(this.start_health_addr, value);
     }
 }

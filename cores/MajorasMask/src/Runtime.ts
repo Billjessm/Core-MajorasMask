@@ -3,12 +3,11 @@ import * as API from '../API/Imports';
 import * as SUB from './Sub/Imports';
 
 export class Runtime extends API.BaseObj implements API.IRuntime {
-    private instance = 0x3e6b20;
-
     private scene_table_ptr = 0x1c3ca0;
     private cur_scene_addr = 0x3e6bc4;
     private cur_scene_ptr_addr = 0x3e6da0;
     private cutscene_ptr_addr = 0x3e8a48;
+    private entrance_index_addr: number = 0x1ef670;
     private switch_flags_addr = 0xb5c78;
     private temp_switch_flags_addr = 0x0; //Not found yet
     private chest_flags_addr = 0xb5cb8;
@@ -20,6 +19,7 @@ export class Runtime extends API.BaseObj implements API.IRuntime {
     private collectable_flag_addr = 0xb5d6c;
     private continue_state_addr = 0x98; //Not found yet
     private epona_ptr = 0x3ffed0;
+    private cutscene_number_addr: number = 0x1ef678; //Cutscene Number, Used to trigger cutscenes. FFF0 - FFFF trigger cutscenes 0-F.
     
     private loaded_object_list_addr = 0x3FE8B4;
 
@@ -43,6 +43,20 @@ export class Runtime extends API.BaseObj implements API.IRuntime {
 
     set cutscene_ptr(val: number) {
         this.emulator.rdramWrite32(this.cutscene_ptr_addr, val);
+    }
+
+    get cutscene_number(): number {
+        return this.emulator.rdramRead32(this.cutscene_number);
+    }
+    set cutscene_number(val: number) {
+        this.emulator.rdramWrite32(this.cutscene_number_addr, val);
+    }
+
+    get entrance_index(): number {
+        return this.emulator.rdramRead32(this.entrance_index_addr);
+    }
+    set entrance_index(val: number) {
+        this.emulator.rdramWrite32(this.entrance_index_addr, val);
     }
 
     get scene_frame(): number {

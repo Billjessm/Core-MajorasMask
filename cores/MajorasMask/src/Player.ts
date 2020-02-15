@@ -2,23 +2,16 @@ import IMemory from 'modloader64_api/IMemory';
 import * as API from '../API/Imports';
 
 export class Player extends API.InstanceObj implements API.IPlayer {
-    //subtract this.instance.Link from these values
-
     private link_animations_ptr = 0x400500;
 
+    private cur_form_addr: number = 0x1ef690;
     private position_addr = 0x3ffeb8;
     private rotation_addr = 0x3ffe6c;
 
     private col_tunic: number = 0x117d08ff;
 
     // private current_mask = 0x3fff03; //Current equipped mask
-    // private current_anim = 0x3ffff8; //Current animation ID
-    // private current_anim_length = 0x40004;
-    // private current_anim_pos = 0x400008;
-    // private current_anim_speed = 0x40000c;
-    // private get_item = 0x400134;
     // private last_coord_ground = 0x400170;
-    // private give_magic_bar = 0x3830dc;
 
     constructor(emu: IMemory) {
         super(emu, 0x3ffdb0);
@@ -30,6 +23,13 @@ export class Player extends API.InstanceObj implements API.IPlayer {
 
     set anim(val: Buffer) {
         this.emulator.rdramWriteBuffer(this.link_animations_ptr, val);
+    }
+
+    get current_form(): number {
+        return this.emulator.rdramRead8(this.cur_form_addr);
+    }
+    set current_form(val: number) {
+        this.emulator.rdramWrite8(this.cur_form_addr, val);
     }
 
     get position(): Buffer {
