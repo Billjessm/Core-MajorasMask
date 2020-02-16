@@ -183,7 +183,7 @@ export enum ItemType {
   HEROS_BOW_LIGHT_ARROW = 0x4c, //Japanese
   SWORD_KOKIRI = 0x4d,
   SWORD_RAZOR = 0x4e,
-  SWORD_GLIDED = 0x4f,
+  SWORD_GILDED = 0x4f,
   SWORD_DOUBLE_HELIX = 0x50,
   SHIELD_HERO = 0x51,
   SHIELD_MIRROR = 0x52,

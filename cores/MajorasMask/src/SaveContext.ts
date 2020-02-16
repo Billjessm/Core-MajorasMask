@@ -10,15 +10,9 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
     private player_name_addr: number = 0x1ef69c; //Player name
     private quest_status_addr: number = 0x1ef72c;
     private rupee_amount_addr: number = 0x1ef6aa;
+    private skill_level_addr: number = 0x1f057f;
     private start_mask_addr: number = 0x1ef674; //Stores the Mask ID Link is wearing (byte)
-
-    private human_c_button_item = 0x1ef6bc;
-    private c_left_item = 0x1ef6bd;
-    private c_down_item = 0x1ef6be;
-    private c_right_item = 0x1ef6bf;
-    private equipped_item_slots = 0x1ef6cc;
-    private inventory_quantities = 0x1ef728;
-    private double_hearts = 0x1ef743; //set to 20 by the game
+    private wallet_addr: number = 0x10c80a;
 
     private pictograph_special = 0x1f04ea; //01 = tingle, 04 = deku king, 0A = pirate
     private has_scarecrow_song = 0x1f05d4; //Scarecrow song flag
@@ -46,7 +40,7 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
     health: API.IHealth;
     magic: API.IMagic;    
     map: API.IMap;
-    skultulla_house: API.ISkultullaHouse;
+    Skulltula_house: API.ISkulltulaHouse;
 
     constructor(emu: IMemory) {
         super(emu);
@@ -67,7 +61,7 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
         this.health = new SUB.Health(emu);
         this.magic = new SUB.Magic(emu);
         this.map = new SUB.Map(emu);
-        this.skultulla_house = new SUB.SkultullaHouse(emu);
+        this.Skulltula_house = new SUB.SkulltulaHouse(emu);
     }
 
     //Haven't looked and confirmed length of rdramRead for all
@@ -129,11 +123,25 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
         this.emulator.rdramWrite16(this.rupee_amount_addr, val);
     }
 
+    get skill_level(): number {
+        return this.emulator.rdramRead8(this.skill_level_addr);
+    }
+    set skill_level(val: number) {
+        this.emulator.rdramWrite8(this.skill_level_addr, val);
+    }
+
     get start_mask(): number {
         return this.emulator.rdramRead8(this.start_mask_addr);
     }
     set start_mask(val: number) {
         this.emulator.rdramWrite8(this.start_mask_addr, val);
+    }
+
+    get wallet(): number {
+        return this.emulator.rdramRead8(this.wallet_addr);
+    }
+    set wallet(val: number) {
+        this.emulator.rdramWrite8(this.wallet_addr, val);
     }
 
     get_checksum(): number {

@@ -10,6 +10,13 @@ export class Dungeon extends API.BaseObj implements API.IDungeon {
       this.inst = addr;
   }
 
+  get raw(): number {
+    return this.emulator.rdramRead32(this.inst);
+  }
+  set raw(val: number) {
+    this.emulator.rdramWrite32(this.inst, val);
+  }
+
   get wood_fall(): number {
       return this.emulator.rdramRead8(this.inst + 0x00);
   }
