@@ -12,7 +12,7 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
     private rupee_amount_addr: number = 0x1ef6aa;
     private skill_level_addr: number = 0x1f057f;
     private start_mask_addr: number = 0x1ef674; //Stores the Mask ID Link is wearing (byte)
-    private wallet_addr: number = 0x10c80a;
+    private wallet_addr: number = 0x1ef72a;
 
     private pictograph_special = 0x1f04ea; //01 = tingle, 04 = deku king, 0A = pirate
     private has_scarecrow_song = 0x1f05d4; //Scarecrow song flag
