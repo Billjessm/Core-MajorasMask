@@ -113,7 +113,7 @@ export class SaveContext extends API.BaseObj implements API.ISaveContext {
     set quest_status(val: number) {
         let value = this.emulator.rdramRead32(this.quest_status_addr);
         value = (value & 0xf0000000) | (val & 0x0fffffff);
-        this.emulator.rdramWrite32(this.quest_status_addr, val);
+        this.emulator.rdramWrite32(this.quest_status_addr, value);
     }
 
     get rupee_amount(): number {
